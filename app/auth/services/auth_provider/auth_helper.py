@@ -5,6 +5,7 @@ from flask import current_app
 from werkzeug.exceptions import abort
 from bcrypt import checkpw
 
+
 def validate_token(token):
     try:
         return jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])

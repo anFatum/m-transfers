@@ -14,7 +14,7 @@ class Configs:
     USE_HTTPS = os.getenv("USE_HTTPS", "False").lower() in ["true", "1"]
     CORS_ORIGINS = os.getenv("CORS_ORIGINS", "*").split(",")
 
-    AUTH_PROVIDER = os.getenv("AUTH_PROVIDER", "local")
+    AUTH_TYPE = os.getenv("AUTH_PROVIDER", "local")
     # region Database
     DB_DRIVER = os.getenv("driver", "sqlite")
     DB_USERNAME = os.getenv("username")

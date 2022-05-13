@@ -5,6 +5,8 @@ from werkzeug.exceptions import abort
 from sqlalchemy.exc import DatabaseError, IntegrityError
 from app import db
 from app.core.utils.abc import EnumWithValues
+from app.core.models.mixins import SaveableModelMixin, JsonableMixin
+from app.banking.models.account import Account
 
 
 class UserRoles(EnumWithValues):
@@ -12,18 +14,18 @@ class UserRoles(EnumWithValues):
     APP_USER = "app_user"
 
 
-class User(db.Model):
+class User(SaveableModelMixin, JsonableMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(128), nullable=False, unique=True)
     name = db.Column(db.String(128), nullable=False)
     roles = db.Column(db.String(128), nullable=False)
     pw_hash = db.Column(db.String(128), nullable=False)
+    accounts = db.relationship(Account, back_populates="owner")
 
     def to_json(self):
+        jsonable = super().to_json()
         return {
-            "id": self.id,
-            "email": self.email,
-            "name": self.name,
+            **jsonable,
             "roles": self.iter_roles
         }
 
@@ -120,9 +122,7 @@ class User(db.Model):
 
     def save(self):
         try:
-            db.session.add(self)
-            db.session.commit()
-            return self
+            return super().save()
         except DatabaseError as e:
             if isinstance(e, IntegrityError):
                 return {"err": "User with this email exists!"}

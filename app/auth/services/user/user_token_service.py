@@ -6,9 +6,11 @@ from parse import parse
 from werkzeug.exceptions import abort, Unauthorized, HTTPException
 
 from app.auth.models.user import User
-from app.auth.services.user.user_service import logger
+from app.auth.services.user.user_service import get_user_by_id
+from app.core.utils.logger import get_logger
 from app.auth.utils.auth_provider import get_auth_provider
 
+logger = get_logger("app")
 
 def get_user_from_token() -> User:
     """
@@ -83,7 +85,7 @@ def authentication_token_parser(token: str) -> User:
     try:
         auth_provider = get_auth_provider(current_app.config["AUTH_TYPE"])
         user = auth_provider.validate_token(token)
-        user['token'] = token
+        user = get_user_by_id(user.get('id'))
         return user
     except (jwt.exceptions.DecodeError,
             jwt.InvalidAudienceError,

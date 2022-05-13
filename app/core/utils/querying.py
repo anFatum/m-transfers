@@ -4,6 +4,7 @@ from flask_sqlalchemy import BaseQuery
 from flask_restplus import Model
 
 from app.core.utils.logger import get_logger
+from app.core.models.mixins import JsonableMixin
 from werkzeug.exceptions import abort
 from http import HTTPStatus
 
@@ -27,13 +28,17 @@ class QueryFilter:
         return query
 
 
+def map_query_to_json(query):
+    query = [obj.to_json() if isinstance(obj, JsonableMixin) else obj for obj in query]
+    if not len(query):
+        abort(HTTPStatus.NOT_FOUND, "Requested info is not found")
+    return query
+
+
 def paginate_query_to_list(query: BaseQuery, page: int, per_page: Optional[int]) -> list:
     if per_page:
         query = query.paginate(page, per_page).items
-    query = [obj.to_mongo(use_db_field=False).to_dict() for obj in
-             query]
-    if not len(query):
-        abort(HTTPStatus.NOT_FOUND, "Requested info is not found")
+    query = map_query_to_json(query)
     return query
 
 

@@ -2,10 +2,11 @@ from http import HTTPStatus
 
 from flask import request
 from flask_restplus import Resource
-from werkzeug.exceptions import abort
+from werkzeug.exceptions import abort, HTTPException
 
 from app.auth.models.user import User
-from app.auth.services.user.user_service import user_query_filter, create_user
+from app.core.utils.querying import map_query_to_json
+from app.auth.services.user.user_service import user_query_filter, create_user, get_user_by_id
 from app.auth.utils.decorators import login_required
 from app.auth.utils.dto import UserDto
 from app.auth.utils.parsers.user_parsers import user_filter_parser
@@ -34,12 +35,14 @@ class UsersList(Resource):
         Get list of registered users.
         """
         args = user_filter_parser.parse_args()
-        query = User.objects
+        query = User.query
         try:
             query = user_query_filter.filter(query, delete_none_keys(args))
             users = query.all()
-            return users, HTTPStatus.OK
+            return map_query_to_json(users), HTTPStatus.OK
         except Exception as e:
+            if isinstance(e, HTTPException):
+                raise e
             logger.exception(e)
             abort(HTTPStatus.BAD_REQUEST, "Invalid query parameter")
 
@@ -64,7 +67,7 @@ class UsersList(Resource):
 @api.route("")
 class UsersDetailView(Resource):
 
-    @api.doc("user_detail",
+    @api.doc("current_user_detail",
              responses={
                  HTTPStatus.UNAUTHORIZED: "Unauthorized",
                  HTTPStatus.BAD_REQUEST: "Bad Request"
@@ -77,5 +80,25 @@ class UsersDetailView(Resource):
         """
         Returns current logged user data
         """
-        user = user.to_mongo(use_db_field=False)
+        user = user.to_json()
         return user, HTTPStatus.OK
+
+
+@api.route("/<int:user_id>")
+class UsersDetailView(Resource):
+
+    @api.doc("user_detail",
+             responses={
+                 HTTPStatus.UNAUTHORIZED: "Unauthorized",
+                 HTTPStatus.BAD_REQUEST: "Bad Request"
+             },
+             parser=authentication_parser)
+    @api.expect(authentication_parser)
+    @api.marshal_with(user_model, code=HTTPStatus.OK)
+    @login_required
+    def get(self, user: User, user_id: int):
+        """
+        Returns user with provided id or 404 if not found
+        """
+        user = get_user_by_id(user_id)
+        return user.to_json(), HTTPStatus.OK

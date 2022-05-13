@@ -42,7 +42,7 @@ def get_user_by_id(user_id: int) -> User:
     :return: found User object
     :rtype: User
     """
-    return User.objects.filter(id=user_id).first_or_404()
+    return User.query.filter_by(id=user_id).first_or_404()
 
 
 def raise_if_invalid_roles(user: User):

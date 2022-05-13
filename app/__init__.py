@@ -1,7 +1,8 @@
+import os
+
+import werkzeug
 from flask import Flask
 from flask_cors import CORS
-import werkzeug
-import os
 
 werkzeug.cached_property = werkzeug.utils.cached_property
 import flask.scaffold
@@ -11,7 +12,6 @@ flask.helpers._endpoint_from_view_func = flask.scaffold._endpoint_from_view_func
 from flask_restplus import Api
 from flask_sqlalchemy import SQLAlchemy
 
-from sqlalchemy import create_engine
 from app.configs import Configs
 from app.core.utils.logger import get_logger, log_request
 
@@ -46,8 +46,10 @@ def create_app(app_configs):
 
     from app.auth.controllers.auth_controller import api as auth_api
     from app.auth.controllers.user_controller import api as user_api
+    from app.banking.controllers.account_controller import api as account_api
     api.add_namespace(auth_api)
     api.add_namespace(user_api)
+    api.add_namespace(account_api)
 
     # set_api(api)
     return app

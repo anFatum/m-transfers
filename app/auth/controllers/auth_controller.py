@@ -24,7 +24,7 @@ class SignInResource(Resource):
         """
         Sign In endpoint, redirects to Auth provider login page
         """
-        auth_provider = get_auth_provider(current_app.config['AUTH_PROVIDER'])
+        auth_provider = get_auth_provider(current_app.config['AUTH_TYPE'])
         user_token = auth_provider.retrieve_token(email=request.json.get('email'),
                                                   password=request.json.get('password'))
         return {"token": user_token}, HTTPStatus.OK
