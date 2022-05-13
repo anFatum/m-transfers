@@ -4,15 +4,15 @@ from flask import request
 from flask_restplus import Resource
 from werkzeug.exceptions import abort, HTTPException
 
-from backend.app.auth.models.user import User
-from backend.app.core.utils.querying import map_query_to_json
-from backend.app.auth.services.user.user_service import user_query_filter, create_user, get_user_by_id
-from backend.app.auth.utils.decorators import login_required
-from backend.app.auth.utils.dto import UserDto
-from backend.app.auth.utils.parsers.user_parsers import user_filter_parser
-from backend.app.core.parsers.request_parsers import authentication_parser
-from backend.app.core.utils.iterable_utils import delete_none_keys
-from backend.app.core.utils.logger import get_logger
+from app.auth.models.user import User
+from app.core.utils.querying import map_query_to_json
+from app.auth.services.user.user_service import user_query_filter, create_user, get_user_by_id
+from app.auth.utils.decorators import login_required
+from app.auth.utils.dto import UserDto
+from app.auth.utils.parsers.user_parsers import user_filter_parser
+from app.core.parsers.request_parsers import authentication_parser
+from app.core.utils.iterable_utils import delete_none_keys
+from app.core.utils.logger import get_logger
 
 api = UserDto.api
 user_model = UserDto.user_model

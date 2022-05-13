@@ -4,16 +4,16 @@ from flask import request
 from flask_restplus import Resource
 from werkzeug.exceptions import abort, HTTPException
 
-from backend.app.auth.utils.decorators import login_required, roles_required
-from backend.app.banking.models.transaction import Transaction
-from backend.app.banking.services.transaction.transaction_service import create_transaction, get_transaction_by_id, \
+from app.auth.utils.decorators import login_required, roles_required
+from app.banking.models.transaction import Transaction
+from app.banking.services.transaction.transaction_service import create_transaction, get_transaction_by_id, \
     transaction_query_filter
-from backend.app.banking.utils.dto import TransactionDto
-from backend.app.banking.utils.parsers.transaction_parsers import transaction_filter_parser
-from backend.app.core.parsers.request_parsers import authentication_parser
-from backend.app.core.utils.iterable_utils import delete_none_keys
-from backend.app.core.utils.logger import get_logger
-from backend.app.core.utils.querying import map_query_to_json
+from app.banking.utils.dto import TransactionDto
+from app.banking.utils.parsers.transaction_parsers import transaction_filter_parser
+from app.core.parsers.request_parsers import authentication_parser
+from app.core.utils.iterable_utils import delete_none_keys
+from app.core.utils.logger import get_logger
+from app.core.utils.querying import map_query_to_json
 
 api = TransactionDto.api
 transaction_model = TransactionDto.transaction_model

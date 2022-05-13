@@ -4,16 +4,16 @@ from flask import request
 from flask_restplus import Resource
 from werkzeug.exceptions import abort, HTTPException
 
-from backend.app.auth.utils.decorators import login_required
-from backend.app.banking.models.account import Account
-from backend.app.banking.services.account.account_service import create_account, account_query_filter, get_account_by_id
-from backend.app.banking.utils.constants import INITIAL_USER_BALANCE
-from backend.app.banking.utils.dto import AccountDto
-from backend.app.banking.utils.parsers.account_parsers import account_filter_parser
-from backend.app.core.parsers.request_parsers import authentication_parser
-from backend.app.core.utils.iterable_utils import delete_none_keys
-from backend.app.core.utils.logger import get_logger
-from backend.app.core.utils.querying import map_query_to_json
+from app.auth.utils.decorators import login_required
+from app.banking.models.account import Account
+from app.banking.services.account.account_service import create_account, account_query_filter, get_account_by_id
+from app.banking.utils.constants import INITIAL_USER_BALANCE
+from app.banking.utils.dto import AccountDto
+from app.banking.utils.parsers.account_parsers import account_filter_parser
+from app.core.parsers.request_parsers import authentication_parser
+from app.core.utils.iterable_utils import delete_none_keys
+from app.core.utils.logger import get_logger
+from app.core.utils.querying import map_query_to_json
 
 api = AccountDto.api
 account_model = AccountDto.account_model

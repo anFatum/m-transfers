@@ -3,10 +3,10 @@ from http import HTTPStatus
 from flask_sqlalchemy import BaseQuery
 from werkzeug.exceptions import abort
 
-from backend.app.banking.models.transaction import Transaction
-from backend.app.auth.models.user import User
-from backend.app.core.utils.querying import QueryFilter
-from backend.app.banking.services.account.account_service import get_account_by_id
+from app.banking.models.transaction import Transaction
+from app.auth.models.user import User
+from app.core.utils.querying import QueryFilter
+from app.banking.services.account.account_service import get_account_by_id
 
 
 def create_transaction(user: User, transaction_data: dict) -> Transaction:

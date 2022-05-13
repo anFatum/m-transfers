@@ -4,8 +4,8 @@ from flask import request
 import requests
 from werkzeug.exceptions import abort
 
-from backend.app.core.utils.logger import get_logger
-from backend.app.core.utils.querying import QueryFilter
+from app.core.utils.logger import get_logger
+from app.core.utils.querying import QueryFilter
 
 _MAPPER_TYPE_TO_METHOD = {
     "get": requests.get,

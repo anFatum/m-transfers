@@ -1,10 +1,10 @@
 import pytest
 from faker import Faker
 
-from backend.app import create_app
-from backend.app.auth.models.user import User
-from backend.app.auth.services.user.user_service import hash_password
-from backend.app.configs import get_config
+from app import create_app
+from app.auth.models.user import User
+from app.auth.services.user.user_service import hash_password
+from app.configs import get_config
 
 USER_COUNT = 5
 fake = Faker()

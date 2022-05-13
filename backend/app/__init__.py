@@ -5,6 +5,7 @@ from flask import Flask
 from flask_cors import CORS
 
 werkzeug.cached_property = werkzeug.utils.cached_property
+werkzeug.wrappers.BaseResponse = werkzeug.Response
 import flask.scaffold
 
 flask.helpers._endpoint_from_view_func = flask.scaffold._endpoint_from_view_func
@@ -12,8 +13,8 @@ flask.helpers._endpoint_from_view_func = flask.scaffold._endpoint_from_view_func
 from flask_restplus import Api
 from flask_sqlalchemy import SQLAlchemy
 
-from backend.app.configs import Configs
-from backend.app.core.utils.logger import get_logger, log_request
+from app.configs import Configs
+from app.core.utils.logger import get_logger, log_request
 
 logger = get_logger()
 db = SQLAlchemy()
@@ -44,10 +45,10 @@ def create_app(app_configs):
 
     api = Api(app, doc='/docs')
 
-    from backend.app.auth.controllers.auth_controller import api as auth_api
-    from backend.app.auth.controllers.user_controller import api as user_api
-    from backend.app.banking.controllers.account_controller import api as account_api
-    from backend.app.banking.controllers.transaction_controller import api as transaction_api
+    from app.auth.controllers.auth_controller import api as auth_api
+    from app.auth.controllers.user_controller import api as user_api
+    from app.banking.controllers.account_controller import api as account_api
+    from app.banking.controllers.transaction_controller import api as transaction_api
     api.add_namespace(auth_api)
     api.add_namespace(user_api)
     api.add_namespace(account_api)

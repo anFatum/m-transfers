@@ -1,10 +1,10 @@
-from backend.app import db
+from app import db
 from sqlalchemy.exc import DatabaseError
 from datetime import datetime
 import json
 from typing import Iterable
 from six import string_types
-from backend.app.core.utils.iterable_utils import delete_none_keys
+from app.core.utils.iterable_utils import delete_none_keys
 
 class TimestampMixin:
     created_at = db.Column(db.DateTime, default=datetime.now())

@@ -1,5 +1,5 @@
-from backend.app import db
-from backend.app.core.models.mixins import SaveableModelMixin, TimestampMixin, JsonableMixin
+from app import db
+from app.core.models.mixins import SaveableModelMixin, TimestampMixin, JsonableMixin
 
 
 class Transaction(SaveableModelMixin, TimestampMixin, JsonableMixin, db.Model):

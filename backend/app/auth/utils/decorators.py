@@ -1,8 +1,8 @@
 from functools import wraps
 from typing import Iterable
 
-from backend.app.auth.services.user.user_token_service import get_user_from_token
-from backend.app.core.utils.logger import get_logger
+from app.auth.services.user.user_token_service import get_user_from_token
+from app.core.utils.logger import get_logger
 
 logger = get_logger("app")
 

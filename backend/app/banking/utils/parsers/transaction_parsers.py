@@ -1,4 +1,4 @@
-from backend.app.core.parsers.request_parsers import pagination_parser
+from app.core.parsers.request_parsers import pagination_parser
 
 transaction_filter_parser = pagination_parser.copy()
 

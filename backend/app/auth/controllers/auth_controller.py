@@ -3,9 +3,9 @@ from http import HTTPStatus
 from flask import current_app, request
 from flask_restplus import Resource
 
-from backend.app.auth.utils.dto import AuthDto
-from backend.app.core.utils.logger import get_logger
-from backend.app.auth.utils.auth_provider import get_auth_provider
+from app.auth.utils.dto import AuthDto
+from app.core.utils.logger import get_logger
+from app.auth.utils.auth_provider import get_auth_provider
 
 api = AuthDto.api
 logger = get_logger("app")

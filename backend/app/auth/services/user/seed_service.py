@@ -1,5 +1,5 @@
-from backend.app.auth.models.user import User, UserRoles
-from backend.app import Location
+from app.auth.models.user import User, UserRoles
+from app import Location
 from mongoengine.errors import NotUniqueError
 from flask import Flask
 

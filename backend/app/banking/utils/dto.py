@@ -1,5 +1,5 @@
 from flask_restplus import Namespace, fields
-from backend.app.auth.utils.dto import UserDto
+from app.auth.utils.dto import UserDto
 
 
 class AccountDto:

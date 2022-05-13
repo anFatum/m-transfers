@@ -1,6 +1,6 @@
 from abc import ABC
 
-from backend.app.auth.services.auth_provider import auth_helper as local_provider
+from app.auth.services.auth_provider import auth_helper as local_provider
 
 
 def get_auth_provider(auth_type: str):

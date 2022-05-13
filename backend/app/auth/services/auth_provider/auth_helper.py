@@ -14,7 +14,7 @@ def validate_token(token):
 
 
 def retrieve_token(email, password):
-    from backend.app.auth.services.user.user_service import get_user_by_email
+    from app.auth.services.user.user_service import get_user_by_email
 
     test_user = get_user_by_email(email)
     correct_password = checkpw(password.encode('utf-8'), test_user.pw_hash.encode("utf-8"))

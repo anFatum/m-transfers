@@ -5,10 +5,10 @@ from flask import request, current_app
 from parse import parse
 from werkzeug.exceptions import abort, Unauthorized, HTTPException
 
-from backend.app.auth.models.user import User
-from backend.app.auth.services.user.user_service import get_user_by_id
-from backend.app.core.utils.logger import get_logger
-from backend.app.auth.utils.auth_provider import get_auth_provider
+from app.auth.models.user import User
+from app.auth.services.user.user_service import get_user_by_id
+from app.core.utils.logger import get_logger
+from app.auth.utils.auth_provider import get_auth_provider
 
 logger = get_logger("app")
 

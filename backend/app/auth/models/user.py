@@ -3,10 +3,10 @@ from typing import Iterable, List
 
 from werkzeug.exceptions import abort
 from sqlalchemy.exc import DatabaseError, IntegrityError
-from backend.app import db
-from backend.app.core.utils.abc import EnumWithValues
-from backend.app.core.models.mixins import SaveableModelMixin, JsonableMixin
-from backend.app.banking.models.account import Account
+from app import db
+from app.core.utils.abc import EnumWithValues
+from app.core.models.mixins import SaveableModelMixin, JsonableMixin
+from app.banking.models.account import Account
 
 
 class UserRoles(EnumWithValues):

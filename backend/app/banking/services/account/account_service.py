@@ -3,10 +3,10 @@ from http import HTTPStatus
 from faker import Faker
 from werkzeug.exceptions import abort
 from typing import Optional
-from backend.app.banking.models.account import Account
+from app.banking.models.account import Account
 
 from flask_sqlalchemy import BaseQuery
-from backend.app.core.utils.querying import QueryFilter
+from app.core.utils.querying import QueryFilter
 
 f = Faker()
 

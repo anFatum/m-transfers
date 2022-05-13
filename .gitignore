@@ -4,6 +4,8 @@
 
 # JetBrains stuff
 .idea/*
+backend/.idea/*
+frontend/.idea/*
 
 # CMake
 cmake-build-*/
@@ -206,3 +208,5 @@ application.macosx
 out
 
 backend/test.db
+
+frontend/node_modules/

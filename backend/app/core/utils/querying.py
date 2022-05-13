@@ -3,8 +3,8 @@ from typing import Iterable, Optional
 from flask_sqlalchemy import BaseQuery
 from flask_restplus import Model
 
-from backend.app.core.utils.logger import get_logger
-from backend.app.core.models.mixins import JsonableMixin
+from app.core.utils.logger import get_logger
+from app.core.models.mixins import JsonableMixin
 from werkzeug.exceptions import abort
 from http import HTTPStatus
 

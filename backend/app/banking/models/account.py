@@ -1,6 +1,6 @@
-from backend.app import db
-from backend.app.core.models.mixins import SaveableModelMixin, JsonableMixin
-from backend.app.banking.models.transaction import Transaction
+from app import db
+from app.core.models.mixins import SaveableModelMixin, JsonableMixin
+from app.banking.models.transaction import Transaction
 
 
 class Account(SaveableModelMixin, JsonableMixin, db.Model):

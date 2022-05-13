@@ -4,9 +4,9 @@ from bcrypt import hashpw, gensalt
 from flask_sqlalchemy import BaseQuery
 from werkzeug.exceptions import abort
 
-from backend.app.auth.models.user import User, UserRoles
-from backend.app.core.utils.logger import get_logger
-from backend.app.core.utils.querying import QueryFilter
+from app.auth.models.user import User, UserRoles
+from app.core.utils.logger import get_logger
+from app.core.utils.querying import QueryFilter
 
 logger = get_logger("app")
 
