@@ -1,10 +1,10 @@
 parse==1.19.0
 cryptography==37.0.2
 Flask==2.1.2
-requests==2.27.1
+requests~=2.25.1
 Flask-SQLAlchemy
 msal==1.17.0
-Werkzeug==2.1.2
+Werkzeug~=2.1.2
 Flask-RESTful>0.3.8
 flask_restplus==0.13.0
 PyJWT~=2.3.0
@@ -13,4 +13,6 @@ pytest~=7.1.2
 faker~=13.11.0
 mock~=4.0.3
 Flask-Cors~=3.0.10
-bcrypt
+bcrypt~=3.2.2
+sqlalchemy~=1.4.36
+six~=1.16.0

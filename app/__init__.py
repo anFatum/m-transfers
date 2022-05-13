@@ -47,9 +47,11 @@ def create_app(app_configs):
     from app.auth.controllers.auth_controller import api as auth_api
     from app.auth.controllers.user_controller import api as user_api
     from app.banking.controllers.account_controller import api as account_api
+    from app.banking.controllers.transaction_controller import api as transaction_api
     api.add_namespace(auth_api)
     api.add_namespace(user_api)
     api.add_namespace(account_api)
+    api.add_namespace(transaction_api)
 
     # set_api(api)
     return app

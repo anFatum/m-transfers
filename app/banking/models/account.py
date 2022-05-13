@@ -10,6 +10,8 @@ class Account(SaveableModelMixin, JsonableMixin, db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     owner = db.relationship("User", foreign_keys=[owner_id],
                             back_populates="accounts")
-    transactions = db.relationship(Transaction, back_populates='origin_account',
-                                   foreign_keys="Transaction.origin_account_id")
+    outcome_transactions = db.relationship(Transaction, back_populates='origin_account',
+                                           foreign_keys="Transaction.origin_account_id")
+    income_transactions = db.relationship(Transaction, back_populates='origin_account',
+                                          foreign_keys="Transaction.dest_account_id")
     balance = db.Column(db.Integer, nullable=False)

@@ -2,7 +2,7 @@ from http import HTTPStatus
 
 from faker import Faker
 from werkzeug.exceptions import abort
-
+from typing import Optional
 from app.banking.models.account import Account
 
 from flask_sqlalchemy import BaseQuery
@@ -32,28 +32,30 @@ def create_account(owner_id: int, initial_balance: int) -> Account:
     abort(HTTPStatus.BAD_REQUEST, new_account.get("err", "Unknown error occured"))
 
 
-def get_account_by_id(account_id: int) -> Account:
+def get_account_by_id(account_id: Optional[int]) -> Account:
     """
-    Method retrieves user from database by id.
+    Method retrieves an account from database by id.
     If not found raises 404 Error
-    :param account_id: user data with id and groups
+    :param account_id: account id
     :type account_id: id
-    :return: found User object
-    :rtype: User
+    :return: found Account object
+    :rtype: Account
     """
+    if account_id is None:
+        abort(HTTPStatus.NOT_FOUND)
     return Account.query.filter_by(id=account_id).first_or_404()
 
 
 def _filter_by_account_number(query: BaseQuery, args: dict) -> BaseQuery:
     """
-    Filter Users by their email.
+    Filter Accounts by their account number.
     Returns filtered query
     :param query: QuerySet that needs to be filtered
-    :type query: BaseQuerySet
+    :type query: BaseQuery
     :param args: Data retrieved from client
     :type args: dict
     :return: Filtered QuerySet on status
-    :rtype: BaseQuerySet
+    :rtype: BaseQuery
     """
     account_number = args['account_number']
     return query.filter_by(account_number=account_number)
@@ -61,20 +63,20 @@ def _filter_by_account_number(query: BaseQuery, args: dict) -> BaseQuery:
 
 def _filter_by_owner_id(query: BaseQuery, args: dict) -> BaseQuery:
     """
-    Filter Users by their email.
+    Filter Accounts by their owner's id.
     Returns filtered query
     :param query: QuerySet that needs to be filtered
-    :type query: BaseQuerySet
+    :type query: BaseQuery
     :param args: Data retrieved from client
     :type args: dict
     :return: Filtered QuerySet on status
-    :rtype: BaseQuerySet
+    :rtype: BaseQuery
     """
     owner_id = args['owner_id']
     return query.filter_by(owner_id=owner_id)
 
 
-# Query filter object that will query Test Request objects
+# Query filter object that will query Account objects
 account_query_filter = QueryFilter(
     [_filter_by_account_number,
      _filter_by_owner_id],

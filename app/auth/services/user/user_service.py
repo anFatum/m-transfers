@@ -11,7 +11,13 @@ from app.core.utils.querying import QueryFilter
 logger = get_logger("app")
 
 
-def hash_password(password: str):
+def hash_password(password: str) -> bytes:
+    """
+    Method to hash provided by user password
+    :param password: str
+    :return: hashed password
+    :rtype: bytes
+    """
     salt = gensalt()
     hashed_pass = hashpw(
         password.encode('utf-8'),
@@ -22,7 +28,7 @@ def hash_password(password: str):
 
 def get_user_by_email(user_email: str) -> User:
     """
-    Method retrieves user from database.
+    Method retrieves user from database by the email.
     If not found raises Not found
     :param user_email: user email
     :type user_email: str
@@ -46,6 +52,12 @@ def get_user_by_id(user_id: int) -> User:
 
 
 def raise_if_invalid_roles(user: User):
+    """
+    Raises BAD REQUEST error if the user is provided with
+    invalid roles not present in UserRoles enum
+    :param user: user that's about to be created
+    :return: None
+    """
     if user.has_invalid_roles():
         abort(HTTPStatus.BAD_REQUEST,
               f"Valid roles are: {', '.join(UserRoles.values())}")
@@ -78,11 +90,11 @@ def _filter_by_email(query: BaseQuery, args: dict) -> BaseQuery:
     Filter Users by their email.
     Returns filtered query
     :param query: QuerySet that needs to be filtered
-    :type query: BaseQuerySet
+    :type query: BaseQuery
     :param args: Data retrieved from client
     :type args: dict
     :return: Filtered QuerySet on status
-    :rtype: BaseQuerySet
+    :rtype: BaseQuery
     """
     email = args['email']
     return query.filter_by(email=email)

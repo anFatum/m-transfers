@@ -1,4 +1,4 @@
-from flask_restplus import Namespace, fields
+from flask_restplus import Namespace, fields, Model
 from app.auth.utils.dto import UserDto
 
 
@@ -9,7 +9,9 @@ class AccountDto:
         "account_number": fields.String(readonly=True),
         "owner": fields.Nested(UserDto.user_model, skip_none=True, readonly=True),
         "owner_id": fields.Integer(),
-        "balance": fields.Integer()
+        "balance": fields.Integer(),
+        "outcome_transactions": fields.List(fields.Raw()),
+        "income_transactions": fields.List(fields.Raw())
     })
 
 
@@ -17,8 +19,9 @@ class TransactionDto:
     api = Namespace("Transaction API", path="/transaction", description="Transaction related operations")
     transaction_model = api.model("Transaction", {
         "id": fields.String(readonly=True),
-        "origin_account": fields.Nested(AccountDto.account_model, skip_none=True, readonly=True),
-        "dest_account": fields.Nested(AccountDto.account_model, skip_none=True, readonly=True),
-        "amount": fields.Integer(required=True, readonly=True),
-        "comment": fields.String(required=True, readonly=True)
+        "origin_account_id": fields.Integer(required=True),
+        "dest_account_id": fields.Integer(required=True),
+        "amount": fields.Integer(required=True),
+        "comment": fields.String(),
+        "created_at": fields.String()
     })

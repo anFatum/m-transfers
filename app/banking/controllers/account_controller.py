@@ -21,19 +21,19 @@ logger = get_logger("app")
 
 
 @api.route("s")
-class UsersList(Resource):
+class AccountList(Resource):
 
     @api.doc("list_accounts", responses={
         HTTPStatus.UNAUTHORIZED: "Unauthorized",
         HTTPStatus.BAD_REQUEST: "Bad Request",
-        HTTPStatus.NOT_FOUND: "Users or groups not found"
+        HTTPStatus.NOT_FOUND: "Resource was not found"
     })
     @api.expect(account_filter_parser)
     @api.marshal_with(account_model, as_list=True, code=HTTPStatus.OK)
     @login_required
     def get(self, user):
         """
-        Get list of registered users.
+        Get list of registered accounts.
         """
         args = account_filter_parser.parse_args()
         query = Account.query
@@ -52,18 +52,18 @@ class UsersList(Resource):
     @api.doc("open_account",
              responses={
                  HTTPStatus.BAD_REQUEST: "Bad Request",
-                 HTTPStatus.NOT_FOUND: "Users or groups not found"
+                 HTTPStatus.NOT_FOUND: "Resource was not found"
              },
              body=account_model,
              parser=authentication_parser)
     @api.expect(account_model, validate=True)
     @api.marshal_with(account_model,
                       code=HTTPStatus.CREATED,
-                      description="User was successfully created")
+                      description="Account was successfully created")
     @login_required
     def post(self, user):
         """
-        Creates a account for a user (if admin role can create account for any user)
+        Creates an account for a user (if admin role can create account for any user)
         """
         initial_balance = INITIAL_USER_BALANCE
         owner_id = user.id
@@ -74,7 +74,7 @@ class UsersList(Resource):
 
 
 @api.route("/<int:account_id>")
-class UsersDetailView(Resource):
+class AccountDetailView(Resource):
 
     @api.doc("account_detail",
              responses={
@@ -87,7 +87,9 @@ class UsersDetailView(Resource):
     @login_required
     def get(self, user, account_id: int):
         """
-        Returns user with provided id or 404 if not found
+        Returns details of account. If user is not admin allows to see only
+        accounts that belongs to a current user, otherwise all accounts are
+        visible.
         """
         account = get_account_by_id(account_id)
         if not user.check_permissions(["admin"]) and not account.owner_id == user.id:
