@@ -29,13 +29,11 @@ class Configs:
 class DevelopmentConfigs(Configs):
     DEBUG = True
     ENVIRONMENT = "development"
-    DB_CONNECTION_STRING = "sqlite:////database.db"
 
 
 class TestingConfigs(Configs):
     DEBUG = True
     ENVIRONMENT = "testing"
-    DB_CONNECTION_STRING = "sqlite:////test_database.db"
 
 
 class ProductionConfigs(Configs):

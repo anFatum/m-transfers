@@ -35,7 +35,7 @@ def create_app(app_configs):
     app.secret_key = app_configs.SECRET_KEY
     app.config['RESTPLUS_MASK_SWAGGER'] = False
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.getcwd()}/test.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = app_configs.DB_CONNECTION_STRING
     db.init_app(app)
     app.db = db
 

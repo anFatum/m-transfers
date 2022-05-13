@@ -1,9 +1,11 @@
-function App() {
-  return (
-    <div className="App">
+import AppRoutes from "./Routes";
 
-    </div>
-  );
+function App() {
+    return (
+        <div className="App">
+            <AppRoutes/>
+        </div>
+    );
 }
 
 export default App;
