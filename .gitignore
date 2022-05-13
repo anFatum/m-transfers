@@ -205,4 +205,4 @@ application.windows64
 application.macosx
 out
 
-test.db
+backend/test.db
