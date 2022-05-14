@@ -5,6 +5,7 @@ flask_restplus==0.13.0
 Flask-RESTful==0.3.9
 Flask_SQLAlchemy==2.5.1
 Jinja2~=3.0.3
+psycopg2_binary==2.9.3
 parse==1.19.0
 PyJWT>=2.4.0
 pytest==7.1.2

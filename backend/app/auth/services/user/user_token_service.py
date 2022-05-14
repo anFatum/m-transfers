@@ -40,6 +40,10 @@ def retrieve_token_from_headers() -> str:
     except (TypeError, ValueError) as e:
         logger.exception(e)
         abort(HTTPStatus.UNAUTHORIZED, "No authentication provided")
+    except Exception as e:
+        logger.error(f"Error parsing {header}")
+        logger.exception(e)
+        abort(HTTPStatus.BAD_REQUEST, "Wrong defined token")
     if not parse_result:
         logger.error("Wrong token type")
         abort(HTTPStatus.BAD_REQUEST, "Wrong format for header")

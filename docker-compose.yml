@@ -16,8 +16,9 @@ services:
     depends_on:
       - postgresdb
     networks:
-      - frontend
       - backend
+    ports:
+      - "5001:5000"
   postgresdb:
     image: postgres
     restart: always
@@ -27,6 +28,18 @@ services:
       - postgresdb:/data/postgresdb
     networks:
       - backend
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    restart: always
+    environment:
+      PORT: 3000
+      REACT_APP_API_URL: http://localhost/api/
+    volumes:
+      - frontdata:/data/frontdata
+    networks:
+      - frontend
   webserver:
     build:
       context: docker/nginx
@@ -48,6 +61,7 @@ services:
       - flask
     networks:
       - frontend
+      - backend
 networks:
   frontend:
     driver: bridge
@@ -57,6 +71,8 @@ volumes:
   postgresdb:
     driver: local
   appdata:
+    driver: local
+  frontdata:
     driver: local
   nginxdata:
     driver: local

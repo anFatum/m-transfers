@@ -54,5 +54,4 @@ def create_app(app_configs):
     api.add_namespace(account_api)
     api.add_namespace(transaction_api)
 
-    # set_api(api)
     return app

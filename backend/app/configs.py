@@ -16,12 +16,12 @@ class Configs:
 
     AUTH_TYPE = os.getenv("AUTH_PROVIDER", "local")
     # region Database
-    DB_DRIVER = os.getenv("driver", "sqlite")
-    DB_USERNAME = os.getenv("username")
-    DB_PASSWORD = os.getenv("password")
-    DB_HOST = os.getenv("host")
-    DB_PORT = os.getenv("port")
-    DB_DATABASE = os.getenv("database")
+    DB_DRIVER = os.getenv("DB_DRIVER", "sqlite")
+    DB_USERNAME = os.getenv("DB_USERNAME")
+    DB_PASSWORD = os.getenv("DB_PASSWORD")
+    DB_HOST = os.getenv("DB_HOST")
+    DB_PORT = os.getenv("DB_PORT")
+    DB_DATABASE = os.getenv("DB_DATABASE")
     DB_CONNECTION_STRING = None
     # endregion Database
 
