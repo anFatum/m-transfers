@@ -18,7 +18,6 @@ const MakeTransactionViewComponent = (props) => {
         const axios = getAxiosClient();
         axios.get("users").then(response => {
             setUsers(response.data);
-            setSelectedUser(response.data[0]);
         });
     }, [])
 
@@ -28,6 +27,13 @@ const MakeTransactionViewComponent = (props) => {
                 setSelectedFromAcc(auth.user.accounts[0].id)
         }
     }, [auth.user])
+
+    useEffect(() => {
+        if (users) {
+            const selectedUser = users.find(user => user.id.toString() !== auth.user?.id.toString())
+            setSelectedUser(selectedUser);
+        }
+    }, [auth.user, users])
 
     useEffect(() => {
         if (selectedUser && selectedUser.accounts) {
@@ -52,7 +58,7 @@ const MakeTransactionViewComponent = (props) => {
         }
         setIsLoading(false);
     }
-    if (!auth.user){
+    if (!auth.user) {
         return <></>
     }
 

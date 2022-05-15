@@ -26,7 +26,7 @@ function HomePage() {
 
     useEffect(() => {
         refetchAccounts();
-    }, [auth])
+    }, [auth.user?.id])
 
     const onOpenAccountButtonClick = async () => {
         const axios = getAxiosClient();
