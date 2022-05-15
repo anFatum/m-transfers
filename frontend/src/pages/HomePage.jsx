@@ -16,6 +16,7 @@ function HomePage() {
             const axios = getAxiosClient();
             try {
                 const response = await axios.get("accounts", {params: {owner_id: auth.user.id}});
+                auth.setUser({...auth.user, accounts: response.data})
                 setAccountList(response.data);
             } catch (e) {
                 setAccountList([]);
