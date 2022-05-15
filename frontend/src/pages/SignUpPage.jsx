@@ -1,48 +1,43 @@
-import {Container, Row, Col, Form, Button} from "react-bootstrap";
+import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import getAxiosClient from "../utils/axiosClient";
 import ToastNotification from "../components/toastNotification";
-import {useAuth} from "../components/authProvider";
-import {useNavigate} from "react-router-dom";
 
-function LoginPage() {
-    const auth = useAuth();
+function SignupPage() {
     const [isAuthenticating, setIsAuthenticating] = useState(false);
-    const [loginError, setLoginError] = useState(undefined);
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [signupError, setSignupError] = useState("");
+    const [signupForm, setSignupForm] = useState({
+        email: "",
+        name: "",
+        password: "",
+        admin: false
+    })
     const navigate = useNavigate();
 
     const handleLogin = async () => {
         const axios = getAxiosClient();
         setIsAuthenticating(true);
         try {
-            const response = await axios.post("sign-in", {
-                email: username,
-                password: password
+            const response = await axios.post("users", {
+                ...signupForm,
+                roles: signupForm.admin ? ["admin"] : ['app_user']
             });
-            auth.login(response.data?.token);
-            navigate("/home")
+            navigate("/login")
         } catch (err) {
             console.log(err);
-            if (err.response?.status === 401) {
-                setLoginError("Incorrect email or/and password")
-            } else {
-                setLoginError("Something went wrong, try again later")
-            }
+            setSignupError("Something went wrong, try again later");
         }
         setIsAuthenticating(false);
     }
 
     return (
         <Container>
-
-            {loginError && <ToastNotification
+            {signupError && <ToastNotification
                 notificationType='error'
-                notificationMessage={loginError}
+                notificationMessage={signupError}
                 onClose={() => {
-                    setLoginError(undefined);
+                    setSignupError(undefined);
                 }}
             />}
 
@@ -62,14 +57,29 @@ function LoginPage() {
                             </Form.Text>
                             <Form.Control
                                 disabled={isAuthenticating}
-                                onChange={e => setUsername(e.target.value)}
+                                onChange={e => setSignupForm({...signupForm, email: e.target.value})}
                                 type="email"
-                                value={username}
+                                value={signupForm.email}
                                 placeholder="Enter email"
                             />
                         </Form.Group>
                     </Col>
-                </Row>
+                </Row><Row className="justify-content-md-center py-2">
+                <Col xs lg="4" md="auto">
+                    <Form.Group className="mb-3" controlId="username">
+                        <Form.Text className="text-muted">
+                            Name
+                        </Form.Text>
+                        <Form.Control
+                            disabled={isAuthenticating}
+                            onChange={e => setSignupForm({...signupForm, name: e.target.value})}
+                            type="email"
+                            value={signupForm.name}
+                            placeholder="Enter name"
+                        />
+                    </Form.Group>
+                </Col>
+            </Row>
                 <Row className="justify-content-md-center pt-2">
                     <Col xs lg="4" md="auto">
                         <Form.Group className="mb-3" controlId="password">
@@ -79,10 +89,28 @@ function LoginPage() {
                             <Form.Control
                                 disabled={isAuthenticating}
                                 type="password"
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
+                                value={signupForm.password}
+                                onChange={e => setSignupForm({...signupForm, password: e.target.value})}
                                 placeholder="Enter password"/>
                         </Form.Group>
+                    </Col>
+                </Row>
+                <Row className="justify-content-md-center pt-2">
+                    <Col xs lg="4" md="auto">
+                        <Form.Check
+                            type='checkbox'
+                            id='agreeTermsOfUsage'
+                        >
+                            <Form.Check.Input
+                                disabled={isAuthenticating}
+                                type='checkbox'
+                                value={signupForm.admin}
+                                onChange={e => setSignupForm({...signupForm, admin: e.target.value})}
+                            />
+                            <Form.Check.Label>
+                                Admin account?
+                            </Form.Check.Label>
+                        </Form.Check>
                     </Col>
                 </Row>
                 <Row className="justify-content-md-center pt-4 text-center">
@@ -96,14 +124,8 @@ function LoginPage() {
                     </Col>
                 </Row>
             </Form>
-            <Row className="justify-content-md-center text-center py-5">
-                <Col xs lg="4" md="auto">
-                    <span>Don't have an account?</span><br/>
-                    <Link className='text-muted' to={'/signup'}>Sign up</Link>
-                </Col>
-            </Row>
         </Container>
     );
 }
 
-export default LoginPage;
+export default SignupPage;

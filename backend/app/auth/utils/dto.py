@@ -22,4 +22,5 @@ class UserDto:
         "name": fields.String(required=True),
         "password": fields.String(required=True, skip_none=True),
         "roles": fields.List(fields.String(), required=True),
+        "accounts": fields.List(fields.Raw(), skip_none=True, readonly=True)
     })
