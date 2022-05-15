@@ -16,7 +16,7 @@ def get_logger(name: str = "app", **kwargs):
         logger = logging.getLogger(name)
 
         file_logger_path = kwargs.get("file_path", 'server.log')
-        logger_level = kwargs.get("level", logging.INFO)
+        logger_level = kwargs.get("level", logging.DEBUG)
         logger_format = kwargs.get("format", LOGGER_FORMAT)
         logger_path_dir = os.path.dirname(file_logger_path)
         if len(logger_path_dir) > 0:

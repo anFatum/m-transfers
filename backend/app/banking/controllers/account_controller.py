@@ -35,7 +35,7 @@ class AccountList(Resource):
         """
         Get list of registered accounts.
         """
-        args = account_filter_parser.parse_args()
+        args = request.args
         query = Account.query
         if not user.check_permissions(['admin']):
             args['owner_id'] = user.id

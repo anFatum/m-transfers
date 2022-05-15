@@ -3,7 +3,7 @@ from http import HTTPStatus
 import jwt
 from flask import request, current_app
 from parse import parse
-from werkzeug.exceptions import abort, Unauthorized, HTTPException
+from werkzeug.exceptions import abort, HTTPException
 
 from app.auth.models.user import User
 from app.auth.services.user.user_service import get_user_by_id
@@ -50,20 +50,6 @@ def retrieve_token_from_headers() -> str:
     return parse_result[0]
 
 
-def retrieve_token_from_cookies():
-    """
-    Method gets the token from request cookies
-    Token should be set as CF_Authorization cookie
-    :return: Token received from headers
-    :rtype: str
-    """
-    token = request.cookies.get("CF_Authorization")
-    if not token:
-        logger.exception("No CF_Authorization cookies found")
-        abort(HTTPStatus.UNAUTHORIZED, "No authentication provided")
-    return token
-
-
 def retrieve_token() -> str:
     """
     Method tries to get authorization token from headers first,
@@ -71,10 +57,7 @@ def retrieve_token() -> str:
     :return: Authorization token
     :rtype: str
     """
-    try:
-        token = retrieve_token_from_headers()
-    except Unauthorized:
-        token = retrieve_token_from_cookies()
+    token = retrieve_token_from_headers()
     return token
 
 

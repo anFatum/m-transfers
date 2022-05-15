@@ -34,11 +34,13 @@ class UsersList(Resource):
         """
         Get list of registered users.
         """
-        args = user_filter_parser.parse_args()
+        args = request.args
         query = User.query
         try:
             query = user_query_filter.filter(query, delete_none_keys(args))
             users = query.all()
+            logger.info(users)
+            logger.info(map_query_to_json(users))
             return map_query_to_json(users), HTTPStatus.OK
         except Exception as e:
             if isinstance(e, HTTPException):

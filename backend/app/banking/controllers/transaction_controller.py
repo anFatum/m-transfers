@@ -35,7 +35,7 @@ class TransactionList(Resource):
         """
         Get list of all transactions (available only for admin user).
         """
-        args = transaction_filter_parser.parse_args()
+        args = request.args
         query = Transaction.query
         try:
             query = transaction_query_filter.filter(query, delete_none_keys(args))
