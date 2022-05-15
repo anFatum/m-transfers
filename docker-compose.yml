@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     command: gunicorn --bind 0.0.0.0:5000 wsgi --workers 2
     env_file:
-      backend/app/.env
+      .env
     environment:
       - ENV=prod
       - DB_HOST=postgresdb
@@ -23,7 +23,7 @@ services:
     image: postgres
     restart: always
     env_file:
-      backend/app/.env
+      .env
     volumes:
       - postgresdb:/data/postgresdb
     networks:

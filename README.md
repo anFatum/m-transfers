@@ -1,3 +1,57 @@
+Set it up using docker compose
+------
+
+### **Prerequisites**
+
+Make sure you have already installed both Docker Engine and Docker Compose. You don’t need to install Python or Mongo,
+ as both are provided by Docker images.
+ 
+[Install Docker Engine](https://docs.docker.com/get-docker/)
+
+[Install Docker Compose](https://docs.docker.com/compose/install/)
+
+### Build and run your app with Compose
+
+From your project directory, start up your application by running `docker-compose up`
+
+    $ docker-compose up
+    Creating flaskproject_postgresdb_1 ... done
+    Creating flaskproject_frontend_1   ... done
+    Creating flask                     ... done
+    Creating webserver                 ... done
+
+Next go to http://localhost/api/docs and API docs should be visible
+As well as if you go to the http://localhost the frontend app should be visible 
+
+Set it up using pure python and react
+------
+Create a .env file copying the .env.example file and modifying values. (If we are 
+running the frontend and backend separately these files should be 
+copied and modified in both directories, meaningfully frontend and backend)
+
+    $ cp .env.example .env
+
+Create a virtual environment and install the requirements
+
+    $ python3 -m venv ./venv
+    $ source ./venv/bin/activate
+    $ pip install -r requirements.txt
+
+
+Start the development server
+
+    $ python run.py
+    * Serving Flask app "wsgi.py"
+    * Environment: production
+    WARNING: Do not use the development server in a production environment.
+    Use a production WSGI server instead.
+    * Debug mode: off
+    * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit
+
+Check the service at http://127.0.0.1:5000/ 
+(The docs are available at http://127.0.0.1:5000/docs)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -14,8 +14,12 @@ function HomePage() {
     const refetchAccounts = async () => {
         if (auth.user) {
             const axios = getAxiosClient();
-            const response = await axios.get("accounts", {params: {owner_id: auth.user.id}});
-            setAccountList(response.data);
+            try {
+                const response = await axios.get("accounts", {params: {owner_id: auth.user.id}});
+                setAccountList(response.data);
+            } catch (e) {
+                setAccountList([]);
+            }
         }
     }
 
