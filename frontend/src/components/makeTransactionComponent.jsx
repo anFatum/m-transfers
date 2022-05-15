@@ -23,7 +23,7 @@ const MakeTransactionViewComponent = (props) => {
     }, [])
 
     useEffect(() => {
-        if (auth.user) {
+        if (auth.user && auth.user.accounts) {
             setSelectedFromAcc(auth.user.accounts[0].id)
         }
     }, [auth])
