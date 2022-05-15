@@ -52,6 +52,9 @@ const MakeTransactionViewComponent = (props) => {
         }
         setIsLoading(false);
     }
+    if (!auth.user){
+        return <></>
+    }
 
     return <Container>
         <Row>
